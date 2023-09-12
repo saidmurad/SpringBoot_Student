@@ -18,8 +18,8 @@ public class StudentApplication {
 	}
 	
 	@GetMapping
-	String home() {
-		return "Hello World";
+	RedirectView home() {
+		return new RedirectView("/student/msg");
 	}
 
 }
