@@ -1,4 +1,5 @@
-greeting: ${message}
+student:
+  greeting: ${message}
 
 server:
   port: 8081
