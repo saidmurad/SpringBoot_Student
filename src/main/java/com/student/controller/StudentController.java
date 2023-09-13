@@ -15,7 +15,7 @@ import java.util.Collection;
 @RequestMapping("/student")
 public class StudentController {
 	
-	 @Value("${message}")
+	 @Value("${greeting}")
 	 private String message;
 	 @Inject
 	 private StudentService studentService;
