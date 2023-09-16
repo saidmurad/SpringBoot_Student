@@ -5,9 +5,11 @@ import com.student.StudentProperties;
 import com.student.core.Student;
 import com.student.service.StudentService;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
+import java.net.URI;
 import java.util.Collection;
 import java.util.Optional;
 
@@ -44,7 +46,17 @@ public class StudentController {
 	public Collection<Student> getStudentsPerDepartment(@PathVariable("department") String department,
 														@RequestParam("name") Optional<String> optional) {
 		return studentService.getAllStudentsInDepartment(department, optional.orElse(""));
+	}
 
+	@PostMapping
+	public ResponseEntity<Student> add(@RequestBody Student student) {
+		studentService.add(student);
+		if(student.getId() > 0) {
+			URI url = URI.create("/college/student/" + student.getId());
+			return ResponseEntity.accepted().location(url).build();
+		} else {
+			return ResponseEntity.badRequest().build();
+		}
 	}
 
 }
