@@ -1,6 +1,7 @@
 package com.student.service;
 
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -21,6 +22,15 @@ public class StudentServiceImpl implements StudentService {
 	@Override
 	public Collection<Student> getAllStudents() {
 		return studentDao.getAll();
+	}
+
+	@Override
+	public Collection<Student> getAllStudentsInDepartment(String department, String lastNameLike) {
+		return studentDao.getAll()
+				.stream()
+				.filter(p->p.getDept().equals(department))
+				.filter(p->p.getSurname().contains(lastNameLike))
+				.collect(Collectors.toList());
 	}
 
 	public void setStudentDao(StudentDao studentDao) {
