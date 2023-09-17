@@ -5,6 +5,7 @@ import com.student.StudentProperties;
 import com.student.core.Student;
 import com.student.service.StudentService;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,7 +24,7 @@ public class StudentController {
 	private StudentService studentService;
  
 	
-    @GetMapping(path = "msg")
+    @GetMapping(path = "/msg")
 	public String getMessage(@RequestHeader("user-agent") String userAgent) {
 		return studentProperties.getGreeting() + userAgent;
 	}
@@ -37,7 +38,8 @@ public class StudentController {
 		return studentService.get(id);
 	}
 
-	@GetMapping("/single")
+	@GetMapping(path = "/single",
+	produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
 	public Student getSingleStudent(@RequestParam("id") Optional<Long> optional) {
 		return studentService.get(optional.orElse(1L));
 	}

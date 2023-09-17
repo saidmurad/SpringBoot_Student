@@ -3,9 +3,7 @@ package com.student.controller;
 import com.student.core.Student;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
@@ -42,5 +40,14 @@ class StudentControllerTest {
             assertThat(responseEntity.getStatusCode(), equalTo(HttpStatus.BAD_REQUEST));
         });
 
+    }
+
+    @Test
+    void testGetOneRequestParam() {
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("accept", MediaType.APPLICATION_XML_VALUE);
+
+        ResponseEntity<String> response = new RestTemplate().exchange("http://localhost:8081/college/student/single?id=1", HttpMethod.GET, new HttpEntity<String>(headers), String.class);
+        System.out.println(response.getBody());
     }
 }
